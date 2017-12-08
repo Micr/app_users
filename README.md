@@ -1,5 +1,9 @@
 run a development server
 
 ```shell
-npm run dev
+yarn start
+```
+Or
+```shell
+npm run start
 ```
