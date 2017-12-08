@@ -14,10 +14,12 @@ class Pagination extends Component {
   }
   componentWillReceiveProps(newProps) {
     if (newProps === this.props) return;
-    const { margin, page, count } = newProps;
+    debugger;
+    const { margin, page, perPage, total } = newProps;
+    const count = Math.ceil(total / perPage);
     const startPage = page > margin ? page - margin : 1;
     const endPage = page + margin > count ? count : page + margin;
-    this.setState({ startPage, endPage });
+    this.setState({ startPage, endPage, count });
   }
 
   onPageChange(event) {
@@ -31,7 +33,7 @@ class Pagination extends Component {
   }
 
   goLastPage() {
-    this.props.onPageChange(this.props.count);
+    this.props.onPageChange(this.state.count);
   }
 
   goPrevPage() {
@@ -43,8 +45,8 @@ class Pagination extends Component {
   }
 
   render() {
-    const { startPage, endPage } = this.state;
-    const { page, margin, count } = this.props;
+    const { startPage, endPage, count } = this.state;
+    const { page, margin } = this.props;
     const pages = [];
     const firstPage = page - margin > 1 ?
           <div

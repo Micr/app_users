@@ -16,8 +16,11 @@ class UserDetails extends Component {
     this.saveChanges = this.saveChanges.bind(this);
   }
   componentDidMount() {
-    // In a real app you query your server for a user with particular ID via,
-    // some http library
+    // Since the API is not available yet we use mock data, otherwise we would
+    // fetch and save them this way:
+    // fetch(`/api/user/${this.props.params.id}`)
+    //   .then(res => res.json())
+    //   .then(user => this.setState({ user }))
     setTimeout(() => {
       const user = users.find(user => user.id === +this.props.match.params.id);
       this.setState({ user });
@@ -26,6 +29,16 @@ class UserDetails extends Component {
   saveChanges(event) {
     event.preventDefault();
     const inputs = event.target.getElementsByTagName('input');
+    // In a real app you would do:
+    // const submittedFields = Array.prototype.reduce
+    //   .call(inputs, (memo, next) => ({ ...memo, [next.name]: next.value }),{})
+    // fetch(`/api/users/${user.id}`, { method: 'post', body: JSON.stringify(submittedFields) })
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     if (res.error) {
+    //       // show error;
+    //     }
+    //   })
     Array.prototype.forEach.call(inputs, element =>
       console.log(`saving ${element.name} with value ${element.value}`));
     this.setState({ statusMessage: true });
@@ -46,25 +59,25 @@ class UserDetails extends Component {
             name="first_name"
             hintText="Enter first name"
             floatingLabelText="First Name"
-            defaultValue={first_name}
+            value={first_name}
           />
           <TextField
             name="last_name"
             hintText="Enter last name"
             floatingLabelText="Last Name"
-            defaultValue={last_name}
+            value={last_name}
           />
           <TextField
             name="email"
             hintText="Enter email"
             floatingLabelText="Email"
-            defaultValue={email}
+            value={email}
           />
           <TextField
             name="age"
             hintText="Enter Age"
             floatingLabelText="Age"
-            defaultValue={age}
+            value={age}
           />
           <div id="user-details-button-container">
             <RaisedButton
